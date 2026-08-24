@@ -1,0 +1,13 @@
+.venv
+__pycache__
+*.pyc
+.git
+.env
+.idea
+.vscode
+frontend/node_modules
+frontend/dist
+*.log
+evaluation/audit_log.jsonl
+.pytest_cache
+**/__pycache__

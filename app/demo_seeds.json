@@ -1,0 +1,83 @@
+{
+  "disclaimer": "Seeded demo cases drawn from the validation distribution. Illustrative, not production statistics.",
+  "cases": [
+    {
+      "id": "do_not_fight",
+      "label": "Do not fight",
+      "blurb": "Unauthorized claim, no delivery, no 3DS, high velocity — weak representment file.",
+      "case": {
+        "chargeback_id": "792b619a12d3",
+        "reason_code": "unauthorized",
+        "merchant_category": "travel",
+        "amount": 2096.86,
+        "delivery_confirmed": 0,
+        "three_d_secure": 0,
+        "device_fingerprint_match": 0,
+        "ip_geolocation_match": 1,
+        "customer_email_opened": 1,
+        "customer_tenure_days": 40,
+        "customer_prior_disputes": 0,
+        "transaction_velocity_24h": 11,
+        "days_since_transaction": 7,
+        "amount_vs_customer_avg": 3.273,
+        "transaction_date": "2025-10-09",
+        "dispute_date": "2025-10-16",
+        "tracking_id": null,
+        "delivery_timestamp": null,
+        "merchant_policy": "Cancellations follow fare rules. 3DS-authenticated bookings are treated as cardholder-present."
+      }
+    },
+    {
+      "id": "manual_review",
+      "label": "Manual review",
+      "blurb": "Mid-band score with mixed signals — analyst judgment required before contesting.",
+      "case": {
+        "chargeback_id": "705d73b00c2f",
+        "reason_code": "item_not_received",
+        "merchant_category": "ecommerce",
+        "amount": 1863.67,
+        "delivery_confirmed": 1,
+        "three_d_secure": 1,
+        "device_fingerprint_match": 1,
+        "ip_geolocation_match": 0,
+        "customer_email_opened": 0,
+        "customer_tenure_days": 724,
+        "customer_prior_disputes": 1,
+        "transaction_velocity_24h": 2,
+        "days_since_transaction": 27,
+        "amount_vs_customer_avg": 0.846,
+        "transaction_date": "2025-10-24",
+        "dispute_date": "2025-11-20",
+        "tracking_id": "TRK868507928",
+        "delivery_timestamp": "2025-10-25 16:00:00",
+        "merchant_policy": "30-day returns on unused goods. Signature on delivery is accepted proof of receipt."
+      }
+    },
+    {
+      "id": "recommend_contest",
+      "label": "Recommend contest",
+      "blurb": "High winnability with delivery + 3DS — queue LLM evidence assembly.",
+      "case": {
+        "chargeback_id": "bd4da86da55e",
+        "reason_code": "unauthorized",
+        "merchant_category": "travel",
+        "amount": 778.78,
+        "delivery_confirmed": 1,
+        "three_d_secure": 1,
+        "device_fingerprint_match": 1,
+        "ip_geolocation_match": 1,
+        "customer_email_opened": 0,
+        "customer_tenure_days": 542,
+        "customer_prior_disputes": 0,
+        "transaction_velocity_24h": 2,
+        "days_since_transaction": 3,
+        "amount_vs_customer_avg": 1.417,
+        "transaction_date": "2025-10-22",
+        "dispute_date": "2025-10-25",
+        "tracking_id": "TRK104474922",
+        "delivery_timestamp": "2025-10-25 04:00:00",
+        "merchant_policy": "Cancellations follow fare rules. 3DS-authenticated bookings are treated as cardholder-present."
+      }
+    }
+  ]
+}

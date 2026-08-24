@@ -1,0 +1,36 @@
+"""Append-only JSONL audit log (local). Swap for Firestore later."""
+
+from __future__ import annotations
+
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parents[2]
+LOG_PATH = ROOT / "evaluation" / "audit_log.jsonl"
+
+
+def log_event(kind: str, payload: dict[str, Any]) -> dict[str, Any]:
+    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    record = {
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "kind": kind,
+        **payload,
+    }
+    with LOG_PATH.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(record) + "\n")
+    return record
+
+
+def recent(limit: int = 25) -> list[dict[str, Any]]:
+    if not LOG_PATH.exists():
+        return []
+    lines = LOG_PATH.read_text(encoding="utf-8").splitlines()
+    out = []
+    for line in lines[-limit:]:
+        try:
+            out.append(json.loads(line))
+        except json.JSONDecodeError:
+            continue
+    return list(reversed(out))

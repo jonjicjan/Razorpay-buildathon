@@ -1,0 +1,166 @@
+# Synthetic chargeback archetypes.
+# Win rates are PRIORS at the archetype level — NOT a formula of the
+# generated feature vector. Features are sampled from overlapping
+# distributions so no single flag identifies an archetype.
+#
+# The dataset is synthetic and is used to validate the system
+# methodology, not to claim production-level chargeback performance.
+
+generation:
+  n_train: 3200
+  n_val: 800
+  n_test: 1000
+  outcome_flip_rate: 0.10
+  missingness_rate: 0.06
+  start_date: "2025-01-01"
+
+cost_assumptions:
+  analyst_hours_per_contest: 1.5
+  analyst_hourly_rate_inr: 800
+  fp_unit_cost_inr: 2500
+  fn_unit_cost_inr: 3500
+  notes: >
+    Placeholders for threshold selection — not empirical merchant measurements.
+    FP includes analyst time plus queue congestion from fighting weak cases.
+    FN is a discounted recoverable-loss placeholder (not full chargeback face value).
+
+# Business policy bands for the three-way desk (separate from binary cost-optimal threshold).
+policy_tiers:
+  do_not_fight_max: 0.35
+  recommend_contest_min: 0.65
+  notes: >
+    These are explicit workflow bands for human-in-the-loop routing.
+    Binary precision/recall are reported at the cost-optimal threshold, not these bands.
+
+
+leakage_blocklist:
+  - won
+  - archetype
+  - procedural_flip
+  - hidden_adjudicator_strictness
+  - split
+  - generation_seed
+  - month_index
+  - tracking_id
+  - delivery_timestamp
+  - merchant_policy
+  - chargeback_id
+  - customer_id
+  - transaction_date
+  - dispute_date
+
+archetypes:
+  unauthorized_3ds:
+    description: Customer claims unauthorized use, but 3DS was completed.
+    win_rate_prior: 0.70
+    mix_weight: 0.22
+    reason_codes: [unauthorized]
+    merchant_categories: [ecommerce, digital_goods, travel]
+    features:
+      delivery_confirmed: 0.55
+      three_d_secure: 0.92
+      device_fingerprint_match: 0.80
+      ip_geolocation_match: 0.75
+      customer_email_opened: 0.50
+      amount_lognormal: {mean: 8.2, sigma: 0.55}
+      customer_tenure_days: {mean: 420, std: 280, min: 14}
+      customer_prior_disputes: {poisson: 0.4}
+      transaction_velocity_24h: {poisson: 1.2}
+      days_since_transaction: {mean: 12, std: 8, min: 1, max: 90}
+      amount_vs_customer_avg: {mean: 1.1, std: 0.45}
+
+  inr_delivery_confirmed:
+    description: Item-not-received claim with delivery confirmation available.
+    win_rate_prior: 0.65
+    mix_weight: 0.24
+    reason_codes: [item_not_received]
+    merchant_categories: [ecommerce, grocery, fashion]
+    features:
+      delivery_confirmed: 0.90
+      three_d_secure: 0.55
+      device_fingerprint_match: 0.70
+      ip_geolocation_match: 0.68
+      customer_email_opened: 0.75
+      amount_lognormal: {mean: 8.0, sigma: 0.50}
+      customer_tenure_days: {mean: 500, std: 300, min: 7}
+      customer_prior_disputes: {poisson: 0.5}
+      transaction_velocity_24h: {poisson: 1.0}
+      days_since_transaction: {mean: 18, std: 10, min: 2, max: 120}
+      amount_vs_customer_avg: {mean: 0.95, std: 0.35}
+
+  friendly_fraud_long_tenure:
+    description: Long-tenure customer disputing a genuine purchase.
+    win_rate_prior: 0.40
+    mix_weight: 0.22
+    reason_codes: [unauthorized, item_not_received, not_as_described]
+    merchant_categories: [ecommerce, digital_goods, fashion, subscriptions]
+    features:
+      delivery_confirmed: 0.48
+      three_d_secure: 0.50
+      device_fingerprint_match: 0.62
+      ip_geolocation_match: 0.60
+      customer_email_opened: 0.58
+      amount_lognormal: {mean: 8.4, sigma: 0.60}
+      customer_tenure_days: {mean: 900, std: 350, min: 180}
+      customer_prior_disputes: {poisson: 1.6}
+      transaction_velocity_24h: {poisson: 1.4}
+      days_since_transaction: {mean: 22, std: 12, min: 3, max: 120}
+      amount_vs_customer_avg: {mean: 1.35, std: 0.70}
+
+  high_velocity_attack:
+    description: Burst of transactions consistent with stolen-card testing / ATO.
+    win_rate_prior: 0.20
+    mix_weight: 0.16
+    reason_codes: [unauthorized]
+    merchant_categories: [digital_goods, ecommerce, travel]
+    features:
+      delivery_confirmed: 0.30
+      three_d_secure: 0.18
+      device_fingerprint_match: 0.22
+      ip_geolocation_match: 0.20
+      customer_email_opened: 0.15
+      amount_lognormal: {mean: 7.6, sigma: 0.70}
+      customer_tenure_days: {mean: 40, std: 50, min: 0}
+      customer_prior_disputes: {poisson: 0.2}
+      transaction_velocity_24h: {poisson: 7.5}
+      days_since_transaction: {mean: 6, std: 4, min: 1, max: 30}
+      amount_vs_customer_avg: {mean: 2.4, std: 1.1}
+
+  no_evidence:
+    description: Thin file — no delivery, no 3DS, no device match.
+    win_rate_prior: 0.10
+    mix_weight: 0.16
+    reason_codes: [unauthorized, item_not_received, not_as_described]
+    merchant_categories: [ecommerce, digital_goods, services]
+    features:
+      delivery_confirmed: 0.12
+      three_d_secure: 0.10
+      device_fingerprint_match: 0.15
+      ip_geolocation_match: 0.18
+      customer_email_opened: 0.12
+      amount_lognormal: {mean: 8.1, sigma: 0.65}
+      customer_tenure_days: {mean: 90, std: 120, min: 0}
+      customer_prior_disputes: {poisson: 0.8}
+      transaction_velocity_24h: {poisson: 2.0}
+      days_since_transaction: {mean: 28, std: 16, min: 5, max: 150}
+      amount_vs_customer_avg: {mean: 1.5, std: 0.80}
+
+drift_archetype:
+  name: digital_goods_inr_new
+  description: New INR pattern on digital goods appearing after month 8.
+  win_rate_prior: 0.28
+  mix_weight_late: 0.12
+  reason_codes: [item_not_received]
+  merchant_categories: [digital_goods, subscriptions]
+  features:
+    delivery_confirmed: 0.08
+    three_d_secure: 0.40
+    device_fingerprint_match: 0.55
+    ip_geolocation_match: 0.50
+    customer_email_opened: 0.70
+    amount_lognormal: {mean: 7.4, sigma: 0.45}
+    customer_tenure_days: {mean: 200, std: 160, min: 1}
+    customer_prior_disputes: {poisson: 0.7}
+    transaction_velocity_24h: {poisson: 2.2}
+    days_since_transaction: {mean: 10, std: 6, min: 1, max: 45}
+    amount_vs_customer_avg: {mean: 0.85, std: 0.30}

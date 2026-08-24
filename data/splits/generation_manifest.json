@@ -1,0 +1,49 @@
+{
+  "synthetic": true,
+  "disclaimer": "The dataset is synthetic and is used to validate the system methodology, not to claim production-level chargeback performance.",
+  "created_at": "2026-08-24T14:47:02.046392Z",
+  "n_train": 3200,
+  "n_val": 800,
+  "n_test": 1000,
+  "seeds": {
+    "train": 101,
+    "val": 202,
+    "test": 303
+  },
+  "temporal": {
+    "train_months": [
+      1,
+      8
+    ],
+    "val_months": [
+      9,
+      10
+    ],
+    "test_months": [
+      11,
+      12
+    ]
+  },
+  "win_rate": {
+    "train": 0.449375,
+    "val": 0.42625,
+    "test": 0.426
+  },
+  "test_frozen": true,
+  "leakage_blocklist": [
+    "won",
+    "archetype",
+    "procedural_flip",
+    "hidden_adjudicator_strictness",
+    "split",
+    "generation_seed",
+    "month_index",
+    "tracking_id",
+    "delivery_timestamp",
+    "merchant_policy",
+    "chargeback_id",
+    "customer_id",
+    "transaction_date",
+    "dispute_date"
+  ]
+}

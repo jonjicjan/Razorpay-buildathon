@@ -1,0 +1,10 @@
+{
+  "do_not_fight_max": 0.35,
+  "recommend_contest_min": 0.65,
+  "cost_optimal_binary": 0.47,
+  "manual_review": [
+    0.35,
+    0.65
+  ],
+  "source": "policy bands from archetypes.yaml; binary cost-optimal kept separate for metrics"
+}

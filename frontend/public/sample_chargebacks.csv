@@ -1,0 +1,4 @@
+chargeback_id,reason_code,merchant_category,amount,delivery_confirmed,three_d_secure,device_fingerprint_match,ip_geolocation_match,customer_email_opened,customer_tenure_days,customer_prior_disputes,transaction_velocity_24h,days_since_transaction,amount_vs_customer_avg,transaction_date,dispute_date,tracking_id,delivery_timestamp,merchant_policy
+csv_weak,unauthorized,travel,2096.86,0,0,0,1,1,40,0,11,7,3.273,2025-10-09,2025-10-16,,,Cancellations follow fare rules.
+csv_mid,item_not_received,ecommerce,1863.67,1,1,1,0,0,724,1,2,27,0.846,2025-10-24,2025-11-20,TRK119203,,30-day returns on unused goods.
+csv_strong,item_not_received,ecommerce,3650,1,1,1,1,1,540,0,1,16,0.9,2025-11-01,2025-11-17,TRK48291033,2025-11-03 16:40:00,Signature on delivery is accepted proof of receipt.
