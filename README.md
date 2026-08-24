@@ -11,7 +11,20 @@
   <img alt="ML" src="https://img.shields.io/badge/score-XGBoost-1e3a5f?style=for-the-badge" />
   <img alt="Policy" src="https://img.shields.io/badge/policy-deterministic-334155?style=for-the-badge" />
   <img alt="LLM" src="https://img.shields.io/badge/LLM-evidence%20only-0ea5e9?style=for-the-badge" />
+  <a href="https://razorpay-buildathon-knu4.onrender.com/"><img alt="Live demo" src="https://img.shields.io/badge/demo-live%20on%20Render-22c55e?style=for-the-badge" /></a>
 </p>
+
+## Live demo (try it)
+
+| | Link |
+|---|---|
+| **App (UI + API)** | **[https://razorpay-buildathon-knu4.onrender.com/](https://razorpay-buildathon-knu4.onrender.com/)** |
+| Health check | [https://razorpay-buildathon-knu4.onrender.com/api/health](https://razorpay-buildathon-knu4.onrender.com/api/health) |
+| API docs | [https://razorpay-buildathon-knu4.onrender.com/docs](https://razorpay-buildathon-knu4.onrender.com/docs) |
+
+**Quick test path:** open the app → click demo cases **1 → 2 → 3** → open **Metrics**.
+
+> Free Render instances may **sleep when idle**. First load can take ~30–60 seconds; refresh once if the page is slow.
 
 > **Honest disclaimer:** The dataset is **synthetic**. It validates the *methodology* (features → score → policy → evidence). It does **not** claim production-level chargeback win rates.
 
