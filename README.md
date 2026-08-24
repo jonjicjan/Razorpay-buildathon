@@ -214,47 +214,7 @@ Full dumps: [`evaluation/`](evaluation/) · decisions: [`docs/`](docs/)
 
 ---
 
-## Live desk demo flow (5 minutes)
 
-```mermaid
-sequenceDiagram
-  actor Judge
-  participant UI as Live Desk
-  participant API as FastAPI
-  participant ML as XGBoost
-  participant Pol as Policy
-  participant Ev as Evidence
-
-  Judge->>UI: Open demo case 1 / 2 / 3
-  UI->>API: POST /api/predict
-  API->>ML: P(winnable)
-  ML-->>API: score + top signals
-  API->>Pol: band routing
-  Pol-->>UI: DO_NOT_FIGHT / REVIEW / CONTEST
-
-  alt RECOMMEND_CONTEST
-    Judge->>UI: Assemble evidence
-    UI->>API: POST /api/generate-evidence
-    API->>Ev: LLM or template_fallback
-    Ev-->>UI: Package + draft + gaps
-  end
-
-  Judge->>UI: Open Metrics tab
-  UI->>API: GET /api/metrics
-  API-->>UI: Held-out P/R charts
-```
-
-**Suggested pitch order**
-
-1. Problem → wasted fights + missed recoveries  
-2. Architecture diagram above  
-3. Live: seed **1** (don’t fight) → **2** (review) → **3** (contest + evidence)  
-4. Metrics tab + honesty disclaimer  
-5. Failure modes (`docs/failure-analysis.md`)
-
-Also supported: **CSV upload** (batch score up to 50 rows) and manual feature editing.
-
----
 
 ## Repository map
 
