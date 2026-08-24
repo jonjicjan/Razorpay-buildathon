@@ -1,5 +1,5 @@
 # Render Blueprint — https://render.com
-# Connect this repo, then deploy the "web" service.
+# Dashboard → New → Blueprint → connect jonjicjan/Razorpay-buildathon
 services:
   - type: web
     name: chargeback-sentinel
@@ -11,5 +11,4 @@ services:
         sync: false
       - key: OPENAI_MODEL
         value: gpt-4o-mini
-      - key: PORT
-        value: 8000
+      # Do NOT hardcode PORT — Render injects it automatically.
